@@ -15,7 +15,8 @@ const login = async (req: Request, res: Response): Promise<void> | never => {
     if(!user){
         throw RequestError(401, "Email not found");
     }
-    if(!bcrypt.compare(password, user.password)) {
+      const passwordCompare = await bcrypt.compare(password, user.password)
+    if(!passwordCompare) {
         throw RequestError(401, "Password wrong");
     }
     const payload = {
